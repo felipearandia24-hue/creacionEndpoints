@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose');
+const { objectId, objectId } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
@@ -48,6 +49,49 @@ app.post('/api/clientes', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Error critico al crear el cliente" });
+    }
+});
+
+app.put('/api/clientes/:id'), async (req, res) => {
+    try {
+        const idCliente = req.params.id;
+        const datosNuevos = req.body;
+
+        const resultado = await mongoose.connection.db.collection('clientes').updateOne(
+            { _id: new objectId(idCliente) },
+            { $set: datosNuevos }
+        );
+
+        if (resultado.matchedCount === 0) {
+            return res.status(404).json({ error: "Cliente no encontrado" });
+        }
+
+        res.json({
+            mensaje: "Cliente actualizado correctamente", modificaciones: resultado.modifiedCount
+        }
+    );
+
+    } catch (error) {
+      console.error(error);
+      resultado.status(500).json({ error: "No se pudo actualizar el cliente" });  
+    }
+}
+
+app.delete('/api/clientes/:id', async (req, res) => {
+    try {
+        const idCliente = req.params.id;
+        const resultado = await mongoose.connection.db.collection('clientes').deleteOne({
+            _id: new objectId(idCliente)
+        });
+
+        if (resultado.deletedCount === 0) {
+            return res.status(404).json({ error: "Cliente no encontrado en la BD o ya fue eliminado"});
+        }
+
+        res.json({mensaje: "No se pudo eliminar el producto"});
+
+    } catch (error) {
+        resultado.status(500).json({error: "No se pudo eliminar el cliente"})
     }
 });
 
