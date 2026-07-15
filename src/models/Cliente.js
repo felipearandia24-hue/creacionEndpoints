@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const MascotaSchema = new mongoose.Schema({
-    nombre: { type: String, required: true },
+    nombre: { type: String, required: [true,  "El nombre es requerido"], trim: true },
     especie: { type: String, required: true },
     _id_mascota: { type: String, required: true }
-}, { _id: false }); // Evita que Mongoose genere un _id interno para cada mascota si ya tienes _id_mascota
+}, { _id: false });
 
 const ClienteSchema = new mongoose.Schema({
     nombre: {
@@ -28,7 +28,7 @@ const ClienteSchema = new mongoose.Schema({
         type: String,
         default: 'pendiente'
     },
-    mascotas: [MascotaSchema] // Aquí definimos que "mascotas" es un arreglo con la estructura anterior
+    mascotas: [MascotaSchema]
 });
 
 module.exports = mongoose.model('Cliente', ClienteSchema);
