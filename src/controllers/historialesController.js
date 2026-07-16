@@ -1,8 +1,13 @@
 const Historiales = require('../models/Historial_clinico');
 
 const obtenerHistoriales = async (req, res) => {
-    try{
-        const historiales = await Historiales.find().populate('tratamiento');
+    try {
+        const historiales = await Historiales.find().populate({
+            path: "mascota",
+            populate: {
+                path: "cliente"
+            }
+        });
         res.json(historiales);
     } catch (error) {
         console.log(error);
@@ -40,7 +45,7 @@ const actualizarHistorial = async (req, res) => {
 
 const eliminarHistorial = async (req, res) => {
     try {
-        const historialEliminado = await Historiales.findByIdAndDelete(req.params.id); 
+        const historialEliminado = await Historiales.findByIdAndDelete(req.params.id);
         if (!historialEliminado) {
             return res.status(404).json({ error: "Historial no encontrado" });
         }

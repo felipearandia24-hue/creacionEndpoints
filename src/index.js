@@ -21,6 +21,9 @@ app.use('/api/V1', clientesRoutes);
 const historialesRoutes = require('./routes/historialCliente');
 app.use('/api/V1', historialesRoutes);
 
+const mascotaRoutes = require("./routes/mascotaRoutes");
+app.use("/api/V1", mascotaRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Servidor escuchando en el puerto", PORT);

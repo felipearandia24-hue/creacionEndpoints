@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 
-const categoriaSchema = new mongoose.Mongoose.Schema({
-  _id_historia: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  _id_mascota: {
-    type: String,
-    required: true,
-    trim: true
-  },
+const historialSchema = new mongoose.Schema({
   fecha: {
     type: Date,
     required: true
@@ -20,14 +10,18 @@ const categoriaSchema = new mongoose.Mongoose.Schema({
     required: true
   },
   tratamiento: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Tratamiento',
+    type: String,
     required: true
   },
   peso: {
     type: Number,
     required: true
+  },
+  mascota: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Mascota",
+    required: true
   }
- }, {tymestamps: true});
+}, { timestamps: true });
 
- module.exports = mongoose.model('Categoria', categoriaSchema);
+module.exports = mongoose.model('HistorialClinico', historialSchema);

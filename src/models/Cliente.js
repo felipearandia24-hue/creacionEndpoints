@@ -1,35 +1,34 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const MascotaSchema = new mongoose.Schema({
-    nombre: { type: String, required: [true,  "El nombre es requerido"], trim: true },
-    especie: { type: String, required: true },
-    _id_mascota: { type: String, required: true }
-}, { _id: false });
-
-const ClienteSchema = new mongoose.Schema({
+const clienteSchema = new mongoose.Schema({
     nombre: {
         type: String,
-        required: true
+        required: [true, "El nombre es requerido"],
+        trim: true
     },
     cedula: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, "La cédula es requerida"],
+        unique: true,
+        trim: true
     },
     telefono: {
-        type: String
+        type: String,
+        trim: true
     },
     correo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Correo',
-        required: true,
-        unique: true
+        type: String,
+        required: [true, "El correo es requerido"],
+        unique: true,
+        lowercase: true,
+        trim: true
     },
     estado: {
         type: String,
-        default: 'pendiente'
-    },
-    mascotas: [MascotaSchema]
+        default: "pendiente"
+    }
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model('Cliente', ClienteSchema);
+module.exports = mongoose.model("Cliente", clienteSchema);
