@@ -18,6 +18,9 @@ app.use(middlewareRevision);
 const clientesRoutes = require('./routes/clientes');
 app.use('/api/V1', clientesRoutes);
 
+const historialesRoutes = require('./routes/historialCliente');
+app.use('/api/V1', historialesRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Servidor escuchando en el puerto", PORT);

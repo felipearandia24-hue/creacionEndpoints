@@ -20,7 +20,8 @@ const ClienteSchema = new mongoose.Schema({
         type: String
     },
     correo: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Correo',
         required: true,
         unique: true
     },

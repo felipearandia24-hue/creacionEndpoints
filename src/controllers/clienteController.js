@@ -2,7 +2,7 @@ const Cliente = require("../models/Cliente");
 
 const obtenerCliente = async (req, res) => {
     try {
-        const cliente = await Cliente.find();
+        const cliente = await Cliente.find().populate('historiales_clinicos');
         res.json(cliente);
     } catch (error) {
         console.log(error);
